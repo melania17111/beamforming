@@ -3,7 +3,7 @@ import numpy as np
 
 def load_audio(i):
     path = 'audio/'
-    names = ['vivian.mp3', 'andrea.mp3', 'edo.mp3', 'ila.mp3']
+    names = ['vivian.mp3', 'andrea.mp3', 'edo.wav', 'ila.mp3']
     signal, sr = librosa.load(path + names[i])
     print(sr)
     if(len(signal) > 100000):
