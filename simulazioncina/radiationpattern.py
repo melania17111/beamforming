@@ -7,14 +7,14 @@ AF =  ----------------
       k = '''
 import numpy as np
 
-def radiation_pattern(N, d, freq):
+def radiation_pattern(N, d, freq, teta):
     a = np.arange(0, 360, 0.1)
     c = 340
     pattern = []
     k = 2*np.pi / (c/freq)
     for alfa in a:
         alfa_rad = np.deg2rad(alfa)
-        x = ((k * d) / 2) * np.sin(alfa_rad)
+        x = ((k * d) / 2) * (np.sin(alfa_rad) - np.sin(teta))
         if x == 0:
             af = 1
         else:

@@ -2,7 +2,7 @@ import tkinter as tk
 import numpy as np
 
 # direzione main lobe (alfa)
-def get_alpha(root):
+def get_teta(root):
     frame = tk.Frame(root)
     tk.Label(frame, text="Direzione (°):").pack()
     slider = tk.Scale(frame, from_=0, to=360, orient="horizontal")

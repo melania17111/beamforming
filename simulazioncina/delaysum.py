@@ -9,7 +9,7 @@ in imput dalla GUI: 4 angoli di direzione
 array progettato per amplificare dalla direzione 60 gradi """
 from input import get_freq
 
-def delaysumbeamforming(dirs, alfa, d, N):
+def delaysumbeamforming(dirs, teta, d, N):
     # N num microfoni
     # d  distanza tra mic
     # alfa direzione main lobe
@@ -18,7 +18,7 @@ def delaysumbeamforming(dirs, alfa, d, N):
     fs = 22050 # freq di campionamento
     n_sample = 40000
     pos_mic = np.array([[0, n*d] for n in range(N)])
-    delays = np.array([(n*d*np.sin(alfa))/c for n in range(N)])
+    delays = np.array([(n*d*np.sin(teta))/c for n in range(N)])
     delays = delays * fs # ritardi in campioni
 
     t = np.arange(n_sample) / fs
