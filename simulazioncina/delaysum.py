@@ -1,5 +1,6 @@
 import numpy as np
 import sounddevice as sd
+import librosa
 """ delay-and-sum
 prima simulazione:
 main lobe a 60 gradi
@@ -8,15 +9,21 @@ main lobe a 60 gradi
 in imput dalla GUI: 4 angoli di direzione
 array progettato per amplificare dalla direzione 60 gradi """
 from input import get_freq
+from audios import load_audio
 
 def delaysumbeamforming(dirs, teta, d, N):
     # N num microfoni
     # d  distanza tra mic
     # alfa direzione main lobe
-    c = 340 # vel suono (m/s)
     n_sig = 4 # 1 voce, 3 rumori
+    n_sample = 100000
+    sig = np.zeros([n_sig, n_sample])
+    for i in range(n_sig):
+        voice = load_audio(i)
+        sig[i, :] = voice.tolist()
+    c = 340 # vel suono (m/s)
+
     fs = 22050 # freq di campionamento
-    n_sample = 40000
     pos_mic = np.array([[0, n*d] for n in range(N)])
     delays = np.array([(n*d*np.sin(teta))/c for n in range(N)])
     delays = delays * fs # ritardi in campioni
@@ -25,7 +32,7 @@ def delaysumbeamforming(dirs, teta, d, N):
     voice = np.sin(2*np.pi*440 * t)
     #noise = np.random.normal(0, 0.1, n_sample) # rumore bianco
     noise = np.sin(2*np.pi*100 * t)
-    sig = np.array([voice, noise, noise, noise])
+    #sig = np.array([voice, noise, noise, noise])
 
     recorded_sig = np.zeros(n_sample)
     beamformed_sig = np.zeros(n_sample)
