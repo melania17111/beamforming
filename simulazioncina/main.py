@@ -3,7 +3,7 @@ import numpy as np
 from delaysum import delaysumbeamforming
 from delaysum import play_rec
 from delaysum import play_bf
-from input import get_teta
+from input import get_theta
 from input import get_freq
 from input import get_d
 from input import get_N
@@ -34,22 +34,22 @@ def on_click(event):
 
 def perform_beamforming():
     global recorded_sig, beamformed_sig
-    recorded_sig, beamformed_sig = delaysumbeamforming(dirs, teta, d, N)
+    recorded_sig, beamformed_sig = delaysumbeamforming(dirs, theta, d, N)
     print("Beamforming completato!")
     print(dirs)
 
 def adjust(_=None):
-    global teta, freq, d, N
+    global theta, freq, d, N
     try:
         freq = float(slider_f.get())
         d = float(slider_d.get())
         N = int(slider_N.get())
-        teta = np.deg2rad(slider_dir.get())
+        theta = np.deg2rad(slider_dir.get())
         canvas.delete("all")
         display(canvas)
-        pattern = radiation_pattern(N, d, freq, teta)
+        pattern = radiation_pattern(N, d, freq, theta)
         draw_pattern(canvas, pattern)
-        print(f"Aggiornato: teta={teta}, freq={freq}, d={d}, N={N}")
+        print(f"Aggiornato: teta={theta}, freq={freq}, d={d}, N={N}")
     except ValueError:
         print("Inserisci solo numeri validi.")
 
@@ -69,7 +69,7 @@ def display(canvas):
         x = centerX
         y = centerY - (arr_length//2) + i*d*40
         canvas.create_oval(x-6, y-6, x+6, y+6, fill="#09124D")
-    canvas.create_line(centerX, centerY, centerX + 250*np.cos(teta), centerY - 250*np.sin(teta), dash=(5,3), fill="red")
+    canvas.create_line(centerX, centerY, centerX + 250*np.cos(theta), centerY - 250*np.sin(theta), dash=(5,3), fill="red")
 
 root = tk.Tk()
 root.title("Beamforming Array Visualizer")
@@ -77,9 +77,9 @@ frame_slider = tk.Frame(root, bg="white")
 frame_slider.pack(pady=10)
 canvas = tk.Canvas(root, width=width, height=height, bg="#09124D")
 canvas.pack(pady=10)
-slider_dir = get_teta(frame_slider)
+slider_dir = get_theta(frame_slider)
 slider_dir.config(command=adjust)
-teta = np.deg2rad(slider_dir.get())
+theta = np.deg2rad(slider_dir.get())
 slider_f = get_freq(frame_slider)
 slider_f.config(command=adjust)
 freq = float(slider_f.get())
@@ -93,7 +93,7 @@ N = int(slider_N.get())
 display(canvas)
 
 canvas.bind("<Button-1>", on_click)
-pattern = radiation_pattern(N, d, freq, teta)
+pattern = radiation_pattern(N, d, freq, theta)
 print(len(pattern))
 draw_pattern(canvas, pattern)
 

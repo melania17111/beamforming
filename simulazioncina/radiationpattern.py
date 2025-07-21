@@ -1,20 +1,17 @@
 '''array factor:
       sin(Nkd/2 sin a)
 AF =  ----------------
-      Nsin(kd/2 sin a)
-      
-      I max può essere 280
-      k = '''
+      Nsin(kd/2 sin a) '''
 import numpy as np
 
-def radiation_pattern(N, d, freq, teta):
+def radiation_pattern(N, d, freq, theta):
     a = np.arange(0, 360, 0.1)
     c = 340
     pattern = []
     k = 2*np.pi / (c/freq)
     for alfa in a:
         alfa_rad = np.deg2rad(alfa)
-        x = ((k * d) / 2) * (np.sin(alfa_rad) - np.sin(teta))
+        x = ((k * d) / 2) * (np.sin(alfa_rad) - np.sin(theta))
         if x == 0:
             af = 1
         else:

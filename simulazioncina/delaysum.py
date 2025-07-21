@@ -11,7 +11,7 @@ array progettato per amplificare dalla direzione 60 gradi """
 from input import get_freq
 from audios import load_audio
 
-def delaysumbeamforming(dirs, teta, d, N):
+def delaysumbeamforming(dirs, theta, d, N):
     # N num microfoni
     # d  distanza tra mic
     # alfa direzione main lobe
@@ -25,13 +25,13 @@ def delaysumbeamforming(dirs, teta, d, N):
 
     fs = 22050 # freq di campionamento
     pos_mic = np.array([[0, n*d] for n in range(N)])
-    delays = np.array([(n*d*np.sin(teta))/c for n in range(N)])
+    delays = np.array([(n*d*np.sin(theta))/c for n in range(N)])
     delays = delays * fs # ritardi in campioni
 
     t = np.arange(n_sample) / fs
-    voice = np.sin(2*np.pi*440 * t)
+    #voice = np.sin(2*np.pi*440 * t)
     #noise = np.random.normal(0, 0.1, n_sample) # rumore bianco
-    noise = np.sin(2*np.pi*100 * t)
+    #noise = np.sin(2*np.pi*100 * t)
     #sig = np.array([voice, noise, noise, noise])
 
     recorded_sig = np.zeros(n_sample)
