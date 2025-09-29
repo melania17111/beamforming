@@ -44,7 +44,7 @@ def delaysumbeamforming(dirs, theta, d, N):
         for n in range(N):
             tau = (n*d*np.sin(dir))/c
             tau = tau * fs
-            recorded_sig += shiftsig(signal, tau)
+            recorded_sig += signal
             beamformed_sig += shiftsig(signal, tau - delays[n])
 
     beamformed_sig /= N
